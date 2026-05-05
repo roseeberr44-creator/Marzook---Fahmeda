@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Marzook ❤️ Fahmeda</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:#000;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* LOADER */
+.loader{
+  position:fixed;
+  width:100%;
+  height:100vh;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  font-size:20px;
+  letter-spacing:3px;
+}
+
+/* HERO */
+.hero{
+  height:100vh;
+  background:url('bg.jpg') center/cover no-repeat;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  animation:zoom 8s infinite alternate;
+}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:44px;
+  letter-spacing:3px;
+  animation:fadeIn 2s ease;
+}
+
+.btn{
+  margin-top:25px;
+  padding:14px 35px;
+  border:1px solid gold;
+  color:gold;
+  background:transparent;
+}
+
+.section{
+  padding:90px 20px;
+  text-align:center;
+}
+
+.gold{color:gold}
+
+/* PARALLAX */
+.parallax{
+  background:url('bg2.jpg') center/cover fixed;
+}
+
+/* COUNTDOWN */
+.countdown{font-size:28px;margin-top:20px}
+
+/* SLIDER */
+.slider{
+  display:flex;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+}
+.slide{
+  min-width:100%;
+  scroll-snap-align:center;
+}
+.slide img{width:100%}
+
+/* MAP */
+iframe{width:100%;height:300px;border:0}
+
+/* MUSIC */
+.music-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:black;
+  border:1px solid gold;
+  color:gold;
+  padding:12px;
+  border-radius:50%;
+  animation:spin 5s linear infinite;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes zoom{
+  from{transform:scale(1)}
+  to{transform:scale(1.1)}
+}
+@keyframes spin{
+  from{transform:rotate(0)}
+  to{transform:rotate(360deg)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">Loading...</div>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Mohamed Marzook <br> ❤️ <br> Fahmeda</h1>
+  <button class="btn" onclick="openInvite()">Open Invitation</button>
+</div>
+
+<!-- MAIN -->
+<div id="main" style="display:none">
+
+<div class="section" data-aos="fade-up">
+  <h2 class="gold">Save The Date</h2>
+  <p>13 July 2026 | 11:30 AM</p>
+</div>
+
+<div class="section parallax" data-aos="fade-up">
+  <h2 class="gold">Countdown</h2>
+  <div id="countdown" class="countdown"></div>
+</div>
+
+<div class="section" data-aos="fade-up">
+  <h2 class="gold">Venue</h2>
+  <p>TS Mahal, Kumbakonam</p>
+</div>
+
+<div class="section" data-aos="fade-up">
+  <h2 class="gold">Location</h2>
+  <iframe src="https://maps.google.com/maps?q=TS%20Mahal%20Kumbakonam&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+</div>
+
+<div class="section" data-aos="fade-up">
+  <h2 class="gold">Gallery</h2>
+
+  <div class="slider">
+    <div class="slide"><img src="g1.jpg"></div>
+    <div class="slide"><img src="g2.jpg"></div>
+    <div class="slide"><img src="g3.jpg"></div>
+    <div class="slide"><img src="g4.jpg"></div>
+  </div>
+
+</div>
+
+<div class="section" data-aos="fade-up">
+  <h2 class="gold">We Invite You</h2>
+  <p>Join us to celebrate our wedding</p>
+</div>
+
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<button class="music-btn" onclick="toggle()">🎵</button>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+/* LOADER */
+window.onload = ()=>{
+  setTimeout(()=>{
+    document.getElementById("loader").style.display="none";
+  },1500);
+}
+
+/* OPEN INVITE */
+function openInvite(){
+  document.querySelector(".hero").style.display="none";
+  document.getElementById("main").style.display="block";
+  document.getElementById("music").play();
+  AOS.init({duration:1200});
+}
+
+/* COUNTDOWN */
+var d=new Date("July 13, 2026 11:30:00").getTime();
+setInterval(()=>{
+  var now=new Date().getTime();
+  var g=d-now;
+
+  var days=Math.floor(g/(1000*60*60*24));
+  var h=Math.floor((g%(1000*60*60*24))/(1000*60*60));
+  var m=Math.floor((g%(1000*60*60))/(1000*60));
+  var s=Math.floor((g%(1000*60))/1000);
+
+  document.getElementById("countdown").innerHTML=
+  days+"d "+h+"h "+m+"m "+s+"s";
+},1000);
+
+/* MUSIC */
+function toggle(){
+  let m=document.getElementById("music");
+  m.paused?m.play():m.pause();
+}
+</script>
+
+</body>
+</html>
